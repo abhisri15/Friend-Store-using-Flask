@@ -18,13 +18,12 @@ def create_friend():
         data = request.get_json()
 
         # Validating fa friend
-        required_fields = ['name', 'age', 'role', 'gender', 'description']
+        required_fields = ['name', 'role', 'gender', 'description']
         for field in required_fields:
             if field not in data or not data.get(field):
                 return jsonify({'error': f'Missing {field} field'}), 400
 
         name = data.get('name')
-        age = data.get('age')
         role = data.get('role')
         gender = data.get('gender')
         description = data.get('description')
@@ -38,7 +37,7 @@ def create_friend():
         else:
             img_url = None
 
-        new_friend = Friend(name=name, age=age, role=role, description=description, gender=gender, img_url=img_url)
+        new_friend = Friend(name=name, role=role, description=description, gender=gender, img_url=img_url)
 
         db.session.add(new_friend)
         db.session.commit()
@@ -78,7 +77,6 @@ def update_friend(id):
 
         data=request.json
         friend.name=data.get('name',friend.name)
-        friend.age=data.get('age',friend.age)
         friend.role=data.get('role',friend.role)
         friend.gender=data.get('gender',friend.gender)
         friend.description=data.get('description',friend.description)
